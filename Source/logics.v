@@ -1,55 +1,62 @@
-module logics(
-  input clk,cs,
-  input [1:0]sel,
-  input [15:0]a,b,
-  output reg [15:0]result,
-  output reg ready);
-  integer state=0;
-  always@(posedge clk)
-    begin
-      case(state)
+module logics( out_d,A,B,cs,clk,rdy,op_sub);
+  output reg [15:0] out_d;
+  input [15:0] A,B;
+     input cs,clk;
+     input [1:0]op_sub;
+     output reg rdy;
+     integer state;
+     initial 
+     begin
+     state=0;
+    
+     end
+     always@(posedge clk)
+     begin
+     case(state)
         0:begin
-          ready=1;
-          result=16'bZ;
-          if(cs)
-            state=1;
-          else
-            state=0;
+            if(cs)
+                state=1;
+            else
+                state=0;           
         end
         1:begin
-          ready=0;
-          if(sel==2'b00)
-          state=2;
-          else if(sel==2'b01)
-            state=3;
-          else if(sel==2'b10)
-            state=4;
-          else if(sel==2'b11)
-            state=5;
-        end
-        2:begin
-          result=~(a&b);
-          state=6;
-        end
-        3:begin
-          result=~(a|b);
-          state=6;
-        end
-        4:begin
-          result=(a^b);
-          state=6;
-        end
-        5:begin
-          result=~a;
-          state=6;
-        end
-        6:begin
-          ready=1;
-          state=0;
-        end
-        
-      endcase
-    end
+            case(op_sub)
+                0:state=2;
+                1:state=3;
+                2:state=4;
+                3:state=5;
+            endcase
+           end
+         2:state=0;
+         3:state=0;
+         4:state=0;
+         5:state=0;
+     endcase
+     end
+     always @(state)
+        begin
+            case(state)
+                0:begin 
+                    rdy=1;
+                    out_d=16'bz;
+                end
+                1:begin rdy=0;   end
+                2:begin
+                    out_d=~(A &B);
+                    rdy=1;
+                end
+                3:begin
+                    out_d=~(A |B);
+                    rdy=1;
+                end
+                4:begin
+                    out_d=A^B;
+                    rdy=1;
+                end
+                5:begin
+                    out_d=~A;
+                    rdy=1;
+                end
+            endcase   
+         end
 endmodule
-
-      
