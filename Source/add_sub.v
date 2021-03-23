@@ -1,7 +1,7 @@
 module add_sub(clk,SUM,COUT,A,B,CIN,SUB,cs,rdy);   
- input [3:0]A,B;
+ input [15:0]A,B;
  input SUB,cs,CIN,clk;
- output reg [3:0]SUM;
+ output reg [15:0]SUM;
  output reg COUT,rdy;
  integer state;
 initial
