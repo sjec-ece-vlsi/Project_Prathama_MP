@@ -9,7 +9,7 @@ input cs,write,req,clk ;
 
 output reg rdy ;
 integer state=0;
-reg [data_width-1:0] RAM[memory_depth-1:0];
+    reg [data_width-1:0] GPR[memory_depth-1:0];
 
 
 always @ (posedge clk)
@@ -40,10 +40,10 @@ case(state)
     rdy=0;
   end
   2:begin
-    RAM[address[2:0]]=data;
+    GPR[address[2:0]]=data;
   end
   4:begin
-    data_1=RAM[address[2:0]];
+    data_1=GPR[address[2:0]];
   end
 endcase
   assign data=(cs&~write)?data_1:16'bZ;
