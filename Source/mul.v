@@ -1,33 +1,36 @@
-module mul(
-  input clk,cs,
-  input [15:0]a,b,
-  output reg [15:0]product,
-  output reg ready);
-  
-  integer state=0;
-  always@(posedge clk)
-    begin
-      case(state)
-        0:begin
-          ready=1;
-          product=16'bZ;
-          if(cs)
-            state=1;
-          else
-            state=0;
+module mul(clk,result,A,B,cs,rdy);
+  output reg [15:0]  result;
+     output reg rdy;
+  input [15:0] A,B;
+     input cs,clk;
+     integer state=0;
+ initial
+ state=0;
+ always@(posedge(clk))
+ begin
+    case(state)
+            0:begin
+                if(cs)
+                state=1;
+                else
+                state=0;
+             end
+           1:state=2;          
+           2:state=0;
+     endcase
+ end
+ always@(state)
+ begin
+    case(state)
+    0:begin
+        rdy=1;
+        result=16'bZ;
         end
-        1:begin
-          ready=0;
-          state=2;
+    1:rdy=0;
+    2:begin
+      result=A[7:0]*B[7:0];
+        rdy=1;
         end
-        2:begin
-          product=a[7:0]*b[7:0];
-          state=3;
-        end
-        3:begin
-          ready=1;
-          state=0;
-        end
-      endcase
-    end
-endmodule
+    endcase
+ end
+ endmodule
