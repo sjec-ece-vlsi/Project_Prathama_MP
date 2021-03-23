@@ -1,4 +1,4 @@
-module gpr(clk, data,write,address,cs,req,rdy);
+module gpr(clk, data,read,address,cs,req,rdy);
 parameter data_width=16;
 parameter address_width=16;
 parameter memory_depth=8;
@@ -22,7 +22,7 @@ always @ (posedge clk)
                     state=0;
                 end
             1:begin
-              if(write)
+                if(~read)
                 state=2;
                      else
                     state=3;
