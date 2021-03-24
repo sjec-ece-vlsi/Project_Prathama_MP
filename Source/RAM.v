@@ -5,7 +5,7 @@ parameter memory_depth=2**14;
 inout  [data_width-1:0] data;
 reg [data_width-1:0] data_1;
 input[address_width-1:0] address;
-input cs,write,req,clk ;
+input cs,read,req,clk ;
 
 output reg rdy ;
 integer state=0;
@@ -46,5 +46,5 @@ case(state)
   data_1=RAM[address[13:0]];
   end
 endcase
-  assign data=(cs&~write)?data_1:16'bZ;
+    assign data=(cs&read)?data_1:16'bZ;
 endmodule
