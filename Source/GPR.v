@@ -41,9 +41,11 @@ case(state)
   end
   2:begin
     GPR[address[2:0]]=data;
+      rdy=1;
   end
   3:begin
     data_1=GPR[address[2:0]];
+      rdy=1;
   end
 endcase
     assign data=(cs&read)?data_1:16'bZ;
