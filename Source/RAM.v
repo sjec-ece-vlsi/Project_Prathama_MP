@@ -41,9 +41,11 @@ case(state)
   end
   2:begin
     RAM[address[13:0]]=data;
+      rdy=1;
   end
-  4:begin
+  3:begin
   data_1=RAM[address[13:0]];
+      rdy=1;
   end
 endcase
     assign data=(cs&read)?data_1:16'bZ;
