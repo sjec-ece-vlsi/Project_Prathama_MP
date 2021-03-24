@@ -1,11 +1,11 @@
-module ram(clk, data,read,address,cs,req,rdy);
+module ram(clk, data,read,address,cs,rdy);
 parameter data_width=16;
 parameter address_width=16;
 parameter memory_depth=2**14;
 inout  [data_width-1:0] data;
 reg [data_width-1:0] data_1;
 input[address_width-1:0] address;
-input cs,read,req,clk ;
+input cs,read,clk ;
 
 output reg rdy ;
 integer state=0;
