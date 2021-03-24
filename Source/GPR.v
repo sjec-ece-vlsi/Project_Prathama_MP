@@ -1,11 +1,11 @@
-module gpr(clk, data,read,address,cs,req,rdy);
+module gpr(clk, data,read,address,cs,rdy);
 parameter data_width=16;
 parameter address_width=16;
 parameter memory_depth=8;
 inout  [data_width-1:0] data;
 reg [data_width-1:0] data_1;
 input[address_width-1:0] address;
-input cs,write,req,clk ;
+input cs,write,clk ;
 
 output reg rdy ;
 integer state=0;
@@ -42,7 +42,7 @@ case(state)
   2:begin
     GPR[address[2:0]]=data;
   end
-  4:begin
+  3:begin
     data_1=GPR[address[2:0]];
   end
 endcase
