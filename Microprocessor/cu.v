@@ -32,6 +32,7 @@ wire reset;
 wire [15:0]fetch_address;
 wire [31:0] ir;
 reg cs_bu;
+wire cout;
 //instantiation
   decoder dec0(flag,clk,cs_dec,ready_bus,ready_eu,ir,ready_dec,cs_fcu,cs_biu,cs_eu,sel_fcu,sel_eu,sel_biu);
 biu biu1(bus,ready_bus,cs_biu,clk, sel_biu,ir,sel_eu,op_sel,fetch_address);
