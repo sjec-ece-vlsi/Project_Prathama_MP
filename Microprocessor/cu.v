@@ -44,4 +44,8 @@ always@(cs_biu)
 begin
 cs_bu=cs_biu;
 end
+always@(cout)
+begin
+flag[1]=cout;
+end
 endmodule
