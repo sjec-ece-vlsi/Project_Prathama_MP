@@ -47,7 +47,7 @@ state=2;
 else if(mov|l_st)//biu
 state=3;
 else//fcu
-state=4;
+state=8;
 end
 //execution
 2:begin
@@ -88,6 +88,15 @@ state=0;
 else
 state=7;
 end
+8:begin
+case(ir[17:15])
+0:state=4;
+1:if(flag[0]==0)
+  state=7;
+  else
+  state=4;
+  endcase
+  end
 endcase
 end
 
