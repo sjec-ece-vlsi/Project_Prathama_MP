@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 //execution unit
-module eu(ir,sel_eu,ready_biu,bus,cs,clk,ready1,op_sel,cs_biu,sel);
+module eu(ir,sel_eu,ready_biu,bus,cs,clk,ready1,op_sel,cs_biu,sel,cout);
 input [31:0] ir;
 input [1:0] sel_eu;
 input ready_biu,clk,cs;
@@ -31,7 +31,8 @@ output reg [1:0] op_sel,sel;
 reg temp,ready,cs_alu;
 reg [15:0] tempA,temp_result,A,B;
 reg [2:0] opcode;
-wire ready_alu,cout;
+wire ready_alu;
+ output cout;
 wire [15:0] out;
 integer state=0;
 
