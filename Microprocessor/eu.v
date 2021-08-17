@@ -28,16 +28,19 @@ inout [15:0] bus;
 output ready1;
 output reg cs_biu;
 output reg [1:0] op_sel,sel;
-reg temp,ready,cs_alu;
+reg temp,ready,cs_alu,cs_cmp;
 reg [15:0] tempA,temp_result,A,B;
 reg [2:0] opcode;
 wire ready_alu;
+wire ready_cmp;
  output cout;
+ wire c,z;
 wire [15:0] out;
 integer state=0;
 
 //instantiation
 alu b0(out,ready_alu,cout,A,B,opcode,cs_alu,clk);
+comp b1(cs,clk,A,B,c,z,ready_cmp);
 
 always@(posedge clk)
 begin
@@ -137,6 +140,72 @@ state=0;
 else
 state=15;
 end
+16:begin
+   if(ir[15])
+   state=23;
+   else
+   state=17;
+   end
+17:begin
+  if(ready_biu)
+   state=18;
+   else
+   state=17;
+   end
+18:begin
+if(ready_biu)
+state=19;
+else
+state=18;
+end
+19:begin
+if(ready_biu)
+state=20;
+else
+state=19;
+end
+20:begin
+if(ready_biu)
+state=21;
+else
+state=20;
+end
+21:begin
+if(ready_biu)
+state=22;
+else
+state=21;
+end
+22:begin
+if(ready_biu)
+state=0;
+else
+state=22;
+end
+23:begin
+if(ready_biu)
+state=24;
+else
+state=23;
+end
+24:begin
+if(ready_biu)
+state=25;
+else
+state=24;
+end
+25:begin
+if(ready_biu)
+state=26;
+else
+state=25;
+end
+26:begin
+if(ready_biu)
+state=0;
+else
+state=26;
+end
 endcase
 end
 
@@ -213,6 +282,43 @@ temp=1;
 op_sel=2'b10;
 ready=1;
 end
+17:begin
+cs_biu=1;
+sel=2'b00;
+end
+18:begin
+op_sel=00;
+tempA=bus;
+end
+20:begin
+op_sel=01;
+B=bus;
+end
+21:begin
+cs_cmp=1;
+cs_biu=0;
+end
+22:begin
+A=temp;
+end
+23:begin
+cs_biu=1;
+sel=2'b00;
+end
+24:begin
+op_sel=00;
+tempA=bus;
+end
+25:begin
+cs_cmp=1;
+cs_biu=0;
+end
+26:begin
+B=16'd0;
+A=tempA;
+end
+
+
 endcase
 end
 
